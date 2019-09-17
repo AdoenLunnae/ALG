@@ -9,7 +9,7 @@ Data Type: struct timespec
     time_t tv_sec
        This represents the number of whole seconds of elapsed time.
     long  tv_nsec
-    This is the rest of the elapsed time (a fraction of a second), represented as the number of nanoseconds.  
+    This is the rest of the elapsed time (a fraction of a second), represented as the number of nanoseconds.
 */
 
 // Ojo hay que compilar g++ -Wall main.cpp -lrt para incluir las librerías de tiempos.
@@ -21,85 +21,38 @@ Data Type: struct timespec
 #include <cstring> //Para usar memset
 #include <iostream>
 #include <stdint.h> // Para usar uint64_t
-
+#include "ClaseTiempo.hpp"
  /*!\brief Models a clock to measure performace.*/
-  class Clock
-  {
-  private:
-    timespec _start;
-    timespec _stop;
-    bool _isStarted;
-  public:
-    Clock ()
-    {
-      memset(&_start,0,sizeof(timespec));
-      memset(&_stop,0,sizeof(timespec));
-      _isStarted=false;
-    } 
-    /*!\brief Starts the clock.
-     * \pre not isStarted()
-     * \post isStarted()
-     */
-    void start ()
-    {      
-      assert (!isStarted());
-      clock_gettime (CLOCK_REALTIME, &_start);   
-      _isStarted=true;
-    }
-    /*!\brief Re-starts the clock.
-     * \post isStarted()
-     */
-    void restart ()
-    {      
-      clock_gettime (CLOCK_REALTIME, &_start);   
-      _isStarted=true;
-    }
-   
-    /*!\brief Stops the clock.
-     * \pre isStarted()
-     * \post not isStarted()
-     */ 
-    void stop ()
-    {
-      assert (_isStarted);
-      clock_gettime (CLOCK_REALTIME, &_stop);   
-      _isStarted=false;
-    }
-    /*!\brief Is the clock started?
-     * \return true if the clock is started currently.
-     */
-    bool isStarted() const
-    {
-      return _isStarted;
-    }
-    /*!\brief Return the elapsed time in mcs.*/
-    uint64_t elapsed() const
-    {
-      assert (!_isStarted);
-      uint64_t startT = (uint64_t)_start.tv_sec * 1000000LL + (uint64_t)_start.tv_nsec / 1000LL;
-      uint64_t stopT = (uint64_t)_stop.tv_sec * 1000000LL + (uint64_t)_stop.tv_nsec / 1000LL;
-      return stopT-startT;
-    }
-  };
+Clock::Clock (){
+  memset(&_start,0,sizeof(timespec));
+  memset(&_stop,0,sizeof(timespec));
+  _isStarted=false;
+}
 
-int main()
-{
-	Clock time;
-	unsigned int a, b;
-	a = 0;
-	b = 0;
-	
-	time.start();
-	
-	for(unsigned int i = 0; i <= 1000000000; i++)
-	{
-		a++;
-		b++;
-	}
-	if (time.isStarted())
-	{
-		time.stop();
-		std::cout << "Han pasado " << time.elapsed() << "microsegundos \n";
-	}
-	return 0;
+void Clock::start (){
+  assert (!isStarted());
+  clock_gettime (CLOCK_REALTIME, &_start);
+  _isStarted=true;
+}
+
+void Clock::restart (){
+  clock_gettime (CLOCK_REALTIME, &_start);
+  _isStarted=true;
+}
+
+void Clock::stop (){
+  assert (_isStarted);
+  clock_gettime (CLOCK_REALTIME, &_stop);
+  _isStarted=false;
+}
+
+bool Clock::isStarted() const{
+  return _isStarted;
+}
+
+uint64_t Clock::elapsed() const{
+  assert (!_isStarted);
+  uint64_t startT = (uint64_t)_start.tv_sec * 1000000LL + (uint64_t)_start.tv_nsec / 1000LL;
+  uint64_t stopT = (uint64_t)_stop.tv_sec * 1000000LL + (uint64_t)_stop.tv_nsec / 1000LL;
+  return stopT-startT;
 }
