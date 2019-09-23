@@ -109,6 +109,33 @@ void ajusteNlogN(const vector<double> &n, const vector<double> &tiemposReales, d
     cout << "Ajuste:   " << a0 << " + " << a1 << "*nlog(n)" << "\n";
 }
 
+void calcularTiemposEstimadosNlogN(const vector <double> &n, const vector <double> &tiemposReales, const double &a0, const double &a1, vector<double> &tiemposEstimados){
+    tiemposEstimados.clear();
+    for(int i = 0; i < n.size(); ++i){
+        tiemposEstimados.push_back(a0+a1*n[i]*log10(n[i]));
+    }
+}
+
+double mean(const vector<double> &n){
+    double sum = 0;
+    for(int i = 0; i < n.size(); ++i){
+        sum += n[i];
+    }
+    return(sum / n.size());
+}
+
+double variance(const vector<double> &n){
+    vector<double> sq;
+    for(int i = 0; i < n.size(); ++i){
+        sq.push_back(n[i]*n[i]);
+    }
+    return(mean(sq) - (mean(n)*mean(n)));
+}
+
+double calcularCoeficienteDeterminación(const vector<double> &tiemposReales, const vector<double> &tiemposEstimados){
+    return(variance(tiemposEstimados) / variance(tiemposReales));
+}
+
 int main(){
     srand(time(NULL));
     Clock clock;
