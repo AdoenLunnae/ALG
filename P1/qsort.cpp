@@ -8,11 +8,13 @@
 #include <cmath>
 #include "sistemaEcuaciones.hpp"
 #include "ClaseTiempo.hpp"
+#include "commonFuncs.hpp"
 
 using std::ofstream;
 using std::vector;
 using std::cout;
 using std::cin;
+
 
 void rellenarVector(vector<int> &v){
     for(int i = 0; i < v.size(); ++i){
@@ -40,12 +42,9 @@ int partition(vector<int> &v, int begin, int end){
         while (v[right] > pivot){
           right--;
         }
-
         while ((left < right) && (v[left] <= pivot)){
           left++;
         }
-
-    // Si todavia no se cruzan los indices seguimos intercambiando
         if(left < right){
             aux= v[left];
             v[left] = v[right];
@@ -53,34 +52,20 @@ int partition(vector<int> &v, int begin, int end){
         }
     }
 
-    //Los indices ya se han cruzado, ponemos el pivote en el lugar que le corresponde
     aux = v[right];
     v[right] = v[begin];
     v[begin] = aux;
 
-    //La nueva posición del pivote
     return right;
 }
 
-//						Funcion Quicksort
-//======================================================================
-//funcion recursiva para hacer el ordenamiento
 void quicksort(vector<int> &v, int begin, int end){
   int pivot;
   if(begin < end){
     pivot = partition(v, begin, end );
-    quicksort( v, begin, pivot - 1 );//ordeno la lista de los menores
-    quicksort( v, pivot + 1, end );//ordeno la lista de los mayores
+    quicksort( v, begin, pivot - 1 );
+    quicksort( v, pivot + 1, end );
   }
-}
-
-double sumatorio(vector<double> x, vector<double> y, int expX, int expY){
-    double result = 0.0;
-    for(int i = 0; i < x.size(); ++i){
-        result += pow(x[i], expX)*pow(y[i], expY);
-    }
-    return result;
-
 }
 
 void ajusteNlogN(const vector<double> &n, const vector<double> &tiemposReales, double &a0, double &a1){
@@ -116,33 +101,7 @@ void calcularTiemposEstimadosNlogN(const vector <double> &n, const vector <doubl
     }
 }
 
-double mean(const vector<double> &n){
-    double sum = 0;
-    for(int i = 0; i < n.size(); ++i){
-        sum += n[i];
-    }
-    return(sum / n.size());
-}
-
-double variance(const vector<double> &n){
-    vector<double> sq;
-    for(int i = 0; i < n.size(); ++i){
-        sq.push_back(n[i]*n[i]);
-    }
-    return(mean(sq) - (mean(n)*mean(n)));
-}
-
-double calcularCoeficienteDeterminación(const vector<double> &tiemposReales, const vector<double> &tiemposEstimados){
-    return(variance(tiemposEstimados) / variance(tiemposReales));
-}
-
-int main(){
-    srand(time(NULL));
-    Clock clock;
-    vector<int> v;
-    double avg, a0, a1;
-    vector<double> times, sizes;
-    int n, min = 0, max = 0, increment = 0, repetitions = 0;
+void options(int &n, int &min, int &max, int &increment, int &repetitions){
     while(min <= 0){
         cout << "Introduce the minimum number of elements in the vector (>0)" << '\n';
         cin >> min;
@@ -159,9 +118,19 @@ int main(){
         cout << "Introduce the repetitions per number of elements in the vector (>0)" << '\n';
         cin >> repetitions;
     }
+}
 
-    ofstream f("Datos.txt");
-    ofstream f2("Medias.txt");
+int getTimeData(){
+    srand(time(NULL));
+    Clock clock;
+    vector<int> v;
+    double avg, a0, a1;
+    vector<double> tiemposReales, sizes, tiemposEstimados;
+    int n, min = 0, max = 0, increment = 0, repetitions = 0;
+    ofstream f;
+
+    options(n, min, max, increment, repetitions);
+
     for(n = min; n<=max; n+=increment){
         v.resize(n);
         avg = 0;
@@ -171,21 +140,24 @@ int main(){
             quicksort(v, 0, v.size()-1);
             clock.stop();
             estaOrdenado(v);
-            f << n << " " << clock.elapsed() <<'\n';
             avg += clock.elapsed();
         }
         avg /= repetitions;
+        cout << "Mean for N=" << n << ":  " << avg << "\n";
         sizes.push_back(n);
-        times.push_back(avg);
-        cout << "Media para N=" << n << " " << avg << '\n';
-        f2 << n << " " << avg <<'\n';
+        tiemposReales.push_back(avg);
     }
-    f.close();
-    ajusteNlogN(sizes, times, a0, a1);
+
+    ajusteNlogN(sizes, tiemposReales, a0, a1);
+    calcularTiemposEstimadosNlogN(sizes, tiemposReales, a0, a1, tiemposEstimados);
+    double r2 = calcularCoeficienteDeterminacion(tiemposReales, tiemposEstimados);
+
     cout << "Ajuste:   " << a0 << "+" << a1 << "*nlog(n)" << "\n";
-    f.open("Estimacion.txt");
+    cout << "Coeficiente de determinación R2:   " << r2 << "\n";
+
+    f.open("Datos.txt", ios::out);
     for(int i = 0; i < sizes.size(); ++i){
-        f << sizes[i] << " " << a0+a1*sizes[i]*log10(sizes[i]) << "\n";
+        f << sizes[i] << " " << tiemposReales[i] << " " << tiemposEstimados[i] << "\n";
     }
     f.close();
 
