@@ -3,6 +3,7 @@
 #include <cmath>
 #include <iostream>
 #include <fstream>
+#include <string>
 #include "ClaseTiempo.hpp"
 #include "sistemaEcuaciones.hpp"
 #include "commonFuncs.hpp"
@@ -76,7 +77,7 @@ void options(int &n, int &min, int &max, int &increment){
     }
 }
 
-int getTimeData(){
+void getTimeDataMatrixProduct(string filename){
     srand(time(NULL));
     Clock clock;
     vector<vector<double>> m1, m2, result;

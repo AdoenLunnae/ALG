@@ -5,12 +5,13 @@
 #include <iostream>
 #include <cstdint>
 #include <fstream>
+#include <string>
 #include <cmath>
+#include "qsort.hpp"
 #include "sistemaEcuaciones.hpp"
 #include "ClaseTiempo.hpp"
 #include "commonFuncs.hpp"
 
-using std::ofstream;
 using std::vector;
 using std::cout;
 using std::cin;
@@ -120,14 +121,14 @@ void options(int &n, int &min, int &max, int &increment, int &repetitions){
     }
 }
 
-int getTimeData(){
+void getTimeDataQuickSort(std::string filename){
     srand(time(NULL));
     Clock clock;
     vector<int> v;
     double avg, a0, a1;
     vector<double> tiemposReales, sizes, tiemposEstimados;
     int n, min = 0, max = 0, increment = 0, repetitions = 0;
-    ofstream f;
+    std::ofstream f;
 
     options(n, min, max, increment, repetitions);
 
@@ -155,7 +156,7 @@ int getTimeData(){
     cout << "Ajuste:   " << a0 << "+" << a1 << "*nlog(n)" << "\n";
     cout << "Coeficiente de determinación R2:   " << r2 << "\n";
 
-    f.open("Datos.txt", ios::out);
+    f.open(filename, ios::out);
     for(int i = 0; i < sizes.size(); ++i){
         f << sizes[i] << " " << tiemposReales[i] << " " << tiemposEstimados[i] << "\n";
     }
