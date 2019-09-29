@@ -14,7 +14,7 @@ using namespace std;
 void rellenarMatriz(vector<vector<double>> &m){
     for(int i = 0; i < m.size(); ++i){
         for(int j = 0; j < m[i].size(); ++j){
-            m[i][j] = ((rand() % 100) + 950) / 100.0;
+            m[i][j] = ((rand() % 100) + 950) / 1000.0;
         }
     }
 }
@@ -114,7 +114,7 @@ void getTimeDataMatrixProduct(string filename){
     cout << "Ajuste:   " << coeficients[3] <<"*x³ + " << coeficients[2] <<"*x² + " << coeficients[1] << "*x + " << coeficients[0] << "\n";
     cout << "Coeficiente de determinación R2:   " << r2 << "\n";
 
-    f.open("Datos.txt", ios::out);
+    f.open(filename, ios::out);
     for(int i = 0; i < sizes.size(); ++i){
         f << sizes[i] << " " << tiemposReales[i] << " " << tiemposEstimados[i] << "\n";
     }

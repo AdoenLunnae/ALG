@@ -88,7 +88,7 @@ void ajusteNlogN(const vector<double> &n, const vector<double> &tiemposReales, d
         }
         B[i][0] = sumatorio(z, tiemposReales, i, 1);
     }
-    
+
     resolverSistemaEcuaciones(A, B, 2, X);
     a0 = X[0][0];
     a1 = X[1][0];

@@ -3,9 +3,7 @@
 using std::vector;
 
 
-
-
-double sumatorio(vector<double> x, vector<double> y, int expX, int expY){
+double sumatorio(vector<double> x, vector<double> y, float expX, int expY){
     double result = 0.0;
     for(int i = 0; i < x.size(); ++i){
         result += pow(x[i], expX)*pow(y[i], expY);
