@@ -11,14 +11,6 @@
 using namespace std;
 
 
-void rellenarMatriz(vector<vector<double>> &m){
-    for(int i = 0; i < m.size(); ++i){
-        for(int j = 0; j < m[i].size(); ++j){
-            m[i][j] = ((rand() % 100) + 950) / 1000.0;
-        }
-    }
-}
-
 void multiply(const vector<vector<double>> &m1, const vector<vector<double>> &m2, vector<vector<double>> &r){
     for(int i = 0; i < m1.size(); ++i){
         for(int j = 0; j < m1.size(); ++j){

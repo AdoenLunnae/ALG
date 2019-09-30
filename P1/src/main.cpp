@@ -6,7 +6,7 @@
 using namespace std;
 
 
-#define ALGORITHM_LIST_MESSAGE "Select which algorithm you want to test:\n\t1.Quicksort\n\t2.Matrix Product\n\tOption:\t"
+#define ALGORITHM_LIST_MESSAGE "Select which algorithm you want to test:\n\t1.Quicksort\n\t2.Matrix Product\n\t3.Strassen Product\n\tOption:\t"
 
 typedef void (*Algorithm) (string str);
 
@@ -44,6 +44,6 @@ int main(){
     Algorithm alg[] = {getTimeDataQuickSort, getTimeDataMatrixProduct}; //We must add the algorithms here in the order they're in the menu
     menu(opt, filename);
     alg[opt-1](filename);
-    if(drawGraphic(filename)) cerr << "Couldn't generate graphic";
+    if(drawGraphic(filename)) cerr << "Couldn't generate graphic\n";
     return 0;
 }

@@ -2,6 +2,13 @@
 #include<cmath>
 using std::vector;
 
+void rellenarMatriz(vector<vector<double>> &m){
+    for(int i = 0; i < m.size(); ++i){
+        for(int j = 0; j < m[i].size(); ++j){
+            m[i][j] = ((rand() % 100) + 950) / 100.0;
+        }
+    }
+}
 
 double sumatorio(vector<double> x, vector<double> y, float expX, int expY){
     double result = 0.0;
