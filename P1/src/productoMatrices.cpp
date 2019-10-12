@@ -43,14 +43,18 @@ void ajustePolinomico(const vector<double> &n, const vector<double> &tiemposReal
     }
 }
 
-void calcularTiempoEstimadoPolinomico(const vector<double> &n, const vector<double> &tiemposReales, const vector<double> &a, vector<double> &tiemposEstimados){
+double calcularTiempoEstimadoPolinomico(const double &n, const vector<double> &a){
+    double result = 0;
+    for(int i = 0; i < a.size(); ++i){
+        result += a[i]*pow(n, i);
+    }
+}
+
+void calcularTiemposEstimadosPolinomico(const vector<double> &n, const vector<double> &tiemposReales, const vector<double> &a, vector<double> &tiemposEstimados){
     tiemposEstimados.clear();
     tiemposEstimados.resize(n.size());
     for(int i = 0; i < n.size(); ++i){
-        tiemposEstimados[i] = 0.0;
-        for(int j = 0; j < a.size(); ++j){
-            tiemposEstimados[i] += a[j]*pow(n[i], j);
-        }
+        tiemposEstimados[i] = calcularTiempoEstimadoPolinomico(n[i], a);
     }
 }
 
@@ -100,7 +104,7 @@ void getTimeDataMatrixProduct(string filename){
     }
 
     ajustePolinomico(sizes, tiemposReales, coeficients);
-    calcularTiempoEstimadoPolinomico(sizes, tiemposReales, coeficients, tiemposEstimados);
+    calcularTiemposEstimadosPolinomico(sizes, tiemposReales, coeficients, tiemposEstimados);
     double r2 = calcularCoeficienteDeterminacion(tiemposReales, tiemposEstimados);
 
     cout << "Ajuste:   " << coeficients[3] <<"*x³ + " << coeficients[2] <<"*x² + " << coeficients[1] << "*x + " << coeficients[0] << "\n";
@@ -111,5 +115,16 @@ void getTimeDataMatrixProduct(string filename){
         f << sizes[i] << " " << tiemposReales[i] << " " << tiemposEstimados[i] << "\n";
     }
     f.close();
+
+    double estimate;
+    double calculated;
+	do{
+		do{
+			cout << "Estimate for N = ";
+			cin >> estimate;
+		}while(estimate < 0);
+        calculated = calcularTiempoEstimadoPolinomico(estimate, coeficients)/1000000; 
+		cout << "The time value is " << calculated/(3600*24) << " days. ("<< calculated << " seconds).\n";
+	}while(estimate != 0);
 
 }

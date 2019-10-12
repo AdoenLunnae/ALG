@@ -6,7 +6,7 @@
 using namespace std;
 
 
-#define ALGORITHM_LIST_MESSAGE "Select which algorithm you want to test:\n\t1.Quicksort\n\t2.Matrix Product\n\t3.Strassen Product\n\tOption:\t"
+#define ALGORITHM_LIST_MESSAGE "Select which algorithm you want to test:\n\t1.Quicksort\n\t2.Matrix Product\n\tOption:\t"
 
 typedef void (*Algorithm) (string str);
 

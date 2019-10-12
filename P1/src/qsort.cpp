@@ -121,6 +121,10 @@ void options(int &n, int &min, int &max, int &increment, int &repetitions){
     }
 }
 
+double calcularTiempoEstimadoNlogN(const double &n, const double &a0, const double &a1){
+	return (a0 + a1*n*log(n));
+}
+
 void getTimeDataQuickSort(std::string filename){
     srand(time(NULL));
     Clock clock;
@@ -162,4 +166,14 @@ void getTimeDataQuickSort(std::string filename){
     }
     f.close();
 
+	double estimate;
+    double calculated;
+	do{
+		do{
+			cout << "Estimate for N = ";
+			cin >> estimate;
+		}while(estimate < 0);
+        calculated = calcularTiempoEstimadoNlogN(estimate, a0, a1)/1000000; 
+		cout << "The time value is " << calculated/(3600*24) << " days. ("<< calculated << " seconds).\n";
+	}while(estimate != 0);
 }

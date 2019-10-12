@@ -1,0 +1,40 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/adoenlunnae/uni/3o/alg/P2/src/Board.hpp
+
+/home/adoenlunnae/uni/3o/alg/P2/src/Paths.cpp
+Board.hpp
+/home/adoenlunnae/uni/3o/alg/P2/src/Board.hpp
+Square.hpp
+/home/adoenlunnae/uni/3o/alg/P2/src/Square.hpp
+vector
+-
+cmath
+-
+
+/home/adoenlunnae/uni/3o/alg/P2/src/Paths.hpp
+Square.hpp
+/home/adoenlunnae/uni/3o/alg/P2/src/Square.hpp
+Board.hpp
+/home/adoenlunnae/uni/3o/alg/P2/src/Board.hpp
+
+/home/adoenlunnae/uni/3o/alg/P2/src/Square.hpp
+Board.hpp
+/home/adoenlunnae/uni/3o/alg/P2/src/Board.hpp
+
+/home/adoenlunnae/uni/3o/alg/P2/src/main.cpp
+iostream
+-
+Square.hpp
+/home/adoenlunnae/uni/3o/alg/P2/src/Square.hpp
+Board.hpp
+/home/adoenlunnae/uni/3o/alg/P2/src/Board.hpp
+Paths.hpp
+/home/adoenlunnae/uni/3o/alg/P2/src/Paths.hpp
+
