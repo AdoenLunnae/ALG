@@ -37,3 +37,4 @@
 # Build directories
 */build/
 .vscode
+*/build

@@ -4,37 +4,43 @@
 #include <cmath>
 using std::vector;
 
-int path(const Square &origin, const Square &position, const Square &goal, const Board &board){
-    if(position == goal){
-        return 0;
-    }
-    int result = 0;
-    int cvals[4] = {-2, -1, 1, 2};
+int path(const int rowOrigin, const Square &goal, const Board &b, vector<vector<Square>> &paths, vector<Square> currPath){
 
-    for(int i = 0; i < 4; ++i){
-        Square aux(3-abs(cvals[i]), cvals[i]);
-        if(aux.in(board)){
-            result += path(origin, aux, goal, board);
-        }
+    if(!goal.in(b) || goal.f() < rowOrigin) return 0;
+    currPath.push_back(goal);
+    if(rowOrigin == goal.f()){
+        paths.push_back(currPath);
+        return 1;
     }
+    int cVals[4] = {-2, -1, 1, 2};
+    int result = 0;
+    
+    for(int i = 0; i < 4; ++i){
+        Square aux(goal.f()-(3-abs(cVals[i])), goal.c()-(cVals[i]));
+        result += path(rowOrigin, aux, b, paths, currPath);
+
+    }
+
     return result;
-}
+}   
 
-int pathFromRow(const int rowOrigin, const Square &goal, const Board &b){
-    if(rowOrigin == goal.f()-1){
-        return (goal.c() < 2 || goal.c() > b.size() - 3)?1:2;
+
+int path(const Square &origin, const Square &goal, const Board &b, vector<vector<Square>> &paths, vector<Square> currPath){
+
+    if(!goal.in(b) || goal.f() < origin.f()) return 0;
+    currPath.push_back(goal);
+    if(origin == goal){
+        paths.push_back(currPath);
+        return 1;
     }
-    if(rowOrigin == goal.f()-2){
-        return (goal.c() < 1 || goal.c() > b.size() - 2)?1:2;
-    }
-    int cvals[4] = {-2, -1, 1, 2};
+    int cVals[4] = {-2, -1, 1, 2};
     int result = 0;
+    
     for(int i = 0; i < 4; ++i){
-        Square aux(goal.f()-(3-abs(cvals[i])), goal.c()-(cvals[i]));
-        if(aux.in(b)){
-            result++;
-            result += pathFromRow(rowOrigin, aux, b);
-        }
+        Square aux(goal.f()-(3-abs(cVals[i])), goal.c()-(cVals[i]));
+        result += path(origin, aux, b, paths, currPath);
+
     }
+
     return result;
 }
