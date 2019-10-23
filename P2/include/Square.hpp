@@ -3,6 +3,7 @@
 
 #include "Board.hpp"
 #include <ostream>
+#include <fstream>
 
 class Square{
     private:
@@ -25,5 +26,6 @@ class Square{
 };
 
 std::ostream& operator<<(std::ostream& os, const Square &s);
+std::ofstream& operator<<(std::ofstream& f, const Square &s);
 
 #endif
