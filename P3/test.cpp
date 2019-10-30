@@ -1,11 +1,9 @@
 #include "entero.hpp"
 #include <iostream>
+#include <signal.h>
 using namespace std;
 
 int main()
 {
-    Entero e("0");
-    cin >> e;
-    cout << e << endl;
-    cout << e + Entero("100000") << endl;
+    cout << Entero("100000000000000000000") * Entero("100000000000000000000") << endl;
 }
