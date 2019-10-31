@@ -138,3 +138,28 @@ Entero operator*(const Entero& e1, const Entero& e2)
     Entero result((w * y).timesTenToThe(2 * halfDigits) + ((w * z) + (y * x)).timesTenToThe(halfDigits) + (x * z));
     return (result);
 }
+
+bool operator<=(const Entero& e1, const Entero& e2)
+{
+    if (e1.numberDigits() < e2.numberDigits())
+        return true;
+    if (e2.numberDigits() < e1.numberDigits())
+        return false;
+
+    for (int i = 0; i < e1.numberDigits(); ++i) {
+        if (e1.value()[i] < e2.value()[i])
+            return true;
+        if (e2.value()[i] < e1.value()[i])
+            return false;
+    }
+    return true;
+}
+
+Entero Entero::factorial() const
+{
+    Entero result("1");
+    for (Entero e("2"); e <= *this; ++e) {
+        result = result * e;
+    }
+    return result;
+}

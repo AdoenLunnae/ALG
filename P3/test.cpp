@@ -5,5 +5,5 @@ using namespace std;
 
 int main()
 {
-    cout << Entero("100000000000000000000") * Entero("100000000000000000000") << endl;
+    cout << Entero("100").factorial() << endl;
 }

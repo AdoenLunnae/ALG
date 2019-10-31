@@ -53,6 +53,8 @@ public:
 
     Entero timesTenToThe(const int power) const;
     Entero modTenToThe(const int power) const;
+
+    Entero factorial() const;
 };
 
 std::ostream& operator<<(std::ostream& out, const Entero& e);
@@ -61,4 +63,5 @@ std::istream& operator>>(std::istream& in, Entero& e);
 Entero operator+(const Entero& e1, const Entero& e2);
 Entero operator*(const Entero& e1, const Entero& e2);
 
+bool operator<=(const Entero& e1, const Entero& e2);
 #endif
