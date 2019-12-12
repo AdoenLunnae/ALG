@@ -43,12 +43,9 @@ vector<vector<int>> nReinasBacktracking(const int& n)
 
         //Si la columna está en el tablero
         if (x[k] < n) {
-            //Si estamos en la última fila
-            if (k == n - 1)
-                //Hemos encontradouna solución
+            if (k == n - 1) //Si estamos en la última fila hemos encontrado una solución
                 soluciones.push_back(x);
-            else {
-                //Si no, vamos a la siguiente fila
+            else { //Si no, vamos a la siguiente fila
                 k++;
                 x[k] = -1;
             }

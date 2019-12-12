@@ -1,10 +1,14 @@
+#include "ClaseTiempo.hpp"
+#include "ajuste.hpp"
 #include "nreinas-bt.hpp"
 #include "nreinas-comun.hpp"
 #include "nreinas-lv.hpp"
 #include <iostream>
+#include <vector>
 
 using std::cin;
 using std::cout;
+using std::vector;
 
 void probarBacktracking()
 {
@@ -41,4 +45,20 @@ void probarLasVegas()
 
 void ajusteBacktracking()
 {
+    int tamInicial = -1, tamMaximo = -1;
+    std::string filepath;
+    while (tamInicial <= 3) {
+        cout << "Tamaño mínimo del tablero: ";
+        cin >> tamInicial;
+    }
+
+    while (tamMaximo <= tamInicial) {
+        cout << "Tamaño máximo del tablero: ";
+        cin >> tamMaximo;
+    }
+
+    cout << "Ruta del fichero para guardar el ajuste: ";
+    cin >> filepath;
+
+    ajustarYGuardar(tamInicial, tamMaximo, filepath);
 }

@@ -13,9 +13,9 @@ int menu()
     do {
         if (system("clear"))
             system("CLS");
-        cout << "Elija una opción:\n1.Probar método backtracking\n\
-                2.Probar método de Las Vegas\n3.Ajuste de tiempos para el backtracking\
-                \n4.Comparar tiempos\n0.Salir\nOpcion:  ";
+        cout << "Elija una opción:\n1.Probar método backtracking\
+                \n2.Probar método de Las Vegas\n3.Ajuste de tiempos para el backtracking\
+                \n0.Salir\nOpcion:  ";
         cin >> c;
     } while (c != 1 && c != 2 && c != 3 && c != 4 && c != 0);
     return c;
@@ -33,6 +33,9 @@ int main()
 
         case 2:
             probarLasVegas();
+            break;
+        case 3:
+            ajusteBacktracking();
             break;
         default:
             break;

@@ -3,5 +3,6 @@
 
 void probarBacktracking();
 void probarLasVegas();
+void ajusteBacktracking();
 
 #endif
