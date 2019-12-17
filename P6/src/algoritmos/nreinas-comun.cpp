@@ -21,6 +21,7 @@ fin
 bool posicionValida(const int& k, const vector<int>& x)
 {
     for (int i = 0; i < k; ++i) {
+        //Comprueba fila   y   diagonal
         if ((x[k] == x[i]) || (abs(x[k] - x[i]) == abs(k - i)))
             return false;
     }

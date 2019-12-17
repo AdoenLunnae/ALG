@@ -28,7 +28,7 @@ fin
 
 vector<vector<int>> nReinasBacktracking(const int& n)
 {
-    vector<int> x(n, -1);
+    vector<int> x(n, -1); //Todas las filas empiezan con la columna -1
     vector<vector<int>> soluciones;
     int k = 0;
 
@@ -45,13 +45,12 @@ vector<vector<int>> nReinasBacktracking(const int& n)
         if (x[k] < n) {
             if (k == n - 1) //Si estamos en la última fila hemos encontrado una solución
                 soluciones.push_back(x);
-            else { //Si no, vamos a la siguiente fila
+            else { //Si no, vamos a la siguiente fila y la inicializamos a -1
                 k++;
                 x[k] = -1;
             }
         } else
-            //Si la columna no está en el tablero, damos un paso atrás
-            k--;
+            k--; //Si la columna no está en el tablero (no hay más posiciones válidas) volvemos a la fila anterior
     }
     return soluciones;
 }
