@@ -15,8 +15,11 @@ int main(int argc, char* argv[])
     cout << "Digital curve to obtain polygonal approximation: ";
     cin >> fileNameDC;
 
+    cout << "Number of points of the polygonal aproximation: ";
+    cin >> n;
+
     //Creates a new class for method and the pointer points to the new class
-    a = new GreedyMethod(fileNameDC, 15);
+    a = new GreedyMethod(fileNameDC, n);
 
     //Execute the method
     a->apply();
