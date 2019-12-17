@@ -16,7 +16,7 @@ void DynamicProgrammingMethod::getApproxMN(const int& m, const int& n, vector<ve
     int bestFather = 0;
     long double error;
     for (int j = m - 1; j <= n - 1; ++j) {
-        error = errors[j][m - 1] + getOriginalCurve().getISE(j, n);
+        error = errors[j][m - 1] + calculateISEValue(j, n);
         if (error < minErr) {
             minErr = error;
             bestFather = j;
@@ -30,15 +30,17 @@ void DynamicProgrammingMethod::apply()
 {
     const int m = getNumberPointsPolygonalApproximation();
     const int n = getOriginalCurve().getNumberPointsDigitalCurve();
+
     vector<vector<int>> father(n, vector<int>(m, 0));
     vector<vector<long double>> errors(n, vector<long double>(m, 0));
+
     vector<int> solution(m, 0);
+
+    calculateSummations();
 
     for (int i = 1; i < n; ++i) {
         errors[i][0] = std::numeric_limits<long double>::infinity();
     }
-
-    calculateSummations();
 
     for (int i = 1; i < m; ++i) {
         for (int j = i; j < n; ++j)
